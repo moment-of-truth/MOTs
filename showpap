@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>在线答题</title>
+<style type="text/css">
+.cho {
+	width: auto;
+	padding-left: 10px;
+}
+.blank {
+	padding-left: 10px;
+	width: auto;
+}
+.title {
+	background-color: #CFF;
+	height: 60px;
+	border-bottom: thin solid #3C6;
+}
+h1 {
+	color: #3C6;
+}
+</style>
+</head>
+
+<body>
+<div class="title">
+  <h1>答题结果</h1>
+</div>
+<p>一、选择题</p>
+<div class="cho">
+<p>1.{{l.2.0.title}}</p>
+  <p>
+ A.{{l.2.0.A}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.{{l.2.0.B}}
+  </p>
+  <p>
+  C:{{l.2.0.C}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  D.{{l.2.0.D}}  </p>
+  <p>你的答案：{{l.0.0}}正确答案：{{l.2.0.answer}}</p>
+</div>
+<div class="cho">
+<p>2.{{l.2.1.title}}</p>
+  <p>
+ A.{{l.2.1.A}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.{{l.2.1.B}}
+  </p>
+  <p>
+  C:{{l.2.1.C}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  D.{{l.2.2.D}}  </p>
+  <p>你的答案：{{l.0.1}}正确答案：{{l.2.1.answer}}</p>
+</div>
+<div class="cho">
+<p>3.{{l.2.2.title}}</p>
+  <p>
+    A.{{l.2.2.A}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.{{l.2.2.B}}
+  </p>
+  <p>
+    C:{{l.2.2.C}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  D.{{l.2.2.D}}  </p>
+  <p>你的答案：{{l.0.2}}正确答案：{{l.2.2.answer}}</p>
+</div>
+<div class="cho">
+<p>4.{{l.2.3.title}}</p>
+  <p>
+    A.{{l.2.3.A}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.{{l.2.3.B}}
+  </p>
+  <p>
+  C:{{l.2.3.C}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  D.{{l.2.3.D}}  </p>
+  <p>你的答案：{{l.0.3}}正确答案：{{l.2.3.answer}}</p>
+</div>
+<div class="cho">
+<p>5.{{l.2.4.title}}</p>
+  <p>
+ A.{{l.2.4.A}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.{{l.2.4.B}}
+  </p>
+  <p>
+  C:{{l.2.4.C}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  D.{{l.2.4.D}}  </p>
+  <p>你的答案：{{l.0.4}}正确答案：{{l.2.4.answer}}</p>
+</div>
+<div class="cho">
+<p>6.{{l.2.5.title}}</p>
+  <p>
+ A.{{l.2.5.A}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.{{l.2.5.B}}
+  </p>
+  <p>
+  C:{{l.2.5.C}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  D.{{l.2.5.D}}  </p>
+  <p>你的答案：{{l.0.5}}正确答案：{{l.2.5.answer}}</p>
+</div>
+<div class="cho">
+<p>7.{{l.2.6.title}}</p>
+  <p>
+ A.{{l.2.6.A}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.{{l.2.6.B}}
+  </p>
+  <p>
+  C:{{l.2.6.C}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  D.{{l.2.6.D}}  </p>
+  <p>你的答案：{{l.0.6}}正确答案：{{l.2.6.answer}}</p>
+</div>
+<div class="cho">
+<p>8.{{l.2.7.title}}</p>
+  <p>
+ A.{{l.2.7.A}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.{{l.2.7.B}}
+  </p>
+  <p>
+    C:{{l.2.7.C}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  D.{{l.2.7.D}}  </p>
+  <p>你的答案：{{l.0.7}}正确答案：{{l.2.7.answer}}</p>
+</div>
+<div class="cho">
+<p>9.{{l.2.8.title}}</p>
+  <p>
+ A.{{l.2.8.A}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.{{l.2.8.B}}
+  </p>
+  <p>
+  C:{{l.2.8.C}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  D.{{l.2.8.D}}  </p>
+  <p>你的答案：{{l.0.8}}正确答案：{{l.2.8.answer}}</p>
+</div>
+<div class="cho">
+<p>10.{{l.2.9.title}}</p>
+  <p>
+ A.{{l.2.9.A}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.{{l.2.9.B}}
+  </p>
+  <p>
+    C:{{l.2.9.C}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  D.{{l.2.9.D}}  </p>
+  <p>你的答案：{{l.0.9}}正确答案：{{l.2.9.answer}}</p>
+</div>
+二、填空题
+<div class="blank">
+<p>1.{{l.3.0.title}}</p>
+你的答案：{{l.1.0}}正确答案：{{l.3.0.answer}} </div>
+<div class="blank">
+<p>2.{{l.3.1.title}}</p>
+<p>你的答案：{{l.1.1}}正确答案：{{l.3.1.answer}}</p>
+</div>
+<div class="blank">
+<p>3.{{l.3.2.title}}</p>
+<p>你的答案：{{l.1.2}}正确答案：{{l.3.2.answer}}</p>
+</div>
+<div class="blank">
+<p>4.{{l.3.3.title}}</p>
+<p>你的答案：{{l.1.3}}正确答案：{{l.3.3.answer}}</p>
+</div>
+<div class="blank">
+<p>5.{{l.3.4.title}}</p>
+<p>你的答案：{{l.1.4}}正确答案：{{l.3.4.answer}}</p>
+</div>
+<p>三、简答题</p>
+ <p>1.{{l.4.0.title}} </p>
+<p>你的答案：{{l.5.0}}</p>
+<p>老师的批注：{{l.6}}</p>
+<p>&nbsp;</p>
+</body>
+</html>
