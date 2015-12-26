@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+.title {	background-color: #CFF;
+	height: 60px;
+	border-bottom: thin solid #3C6;
+}
+h1{
+	color: #3C6;
+}
+.ele{
+	margin:20px;
+	width:300px;
+}
+</style>
+</head>
+
+<body>
+<div class="title">
+  <h1>做题记录</h1>
+</div>
+{%if l.3%}
+<div class="ele" align="center">
+<table width="200" border="1">
+  <tr>
+    <td>未批改的试卷</td>
+  </tr>
+  {%for pap in l.3%}
+  <tr>
+    <td>{{pap.pn}}</td>
+  </tr>
+  {%endfor%}
+</table>
+</div>
+{%endif%}
+{%if l.0%}
+<div class="ele" align="center">
+<table width="200" border="1">
+  <tr>
+    <td>已批改的试卷</td>
+    <td>得分</td>
+  </tr>
+  {%for pap in l.0%}
+  <tr>
+    <td><a href="/showpap/?p_id={{pap.id}}">{{pap.pn}}</a></td>
+    <td>{{pap.sco_sum}}</td>
+  </tr>
+  {%endfor%}
+</table>
+<p>选择题正确率：{{l.1}}
+填空题正确率:{{l.2}} </p>
+</div>
+{%endif%}
+</body>
+</html>
