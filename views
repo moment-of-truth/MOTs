@@ -1,0 +1,737 @@
+# Create your views here.
+# -*- coding:utf-8 -*-
+import random
+import string
+import types
+from django.http import HttpResponse,HttpResponseRedirect
+from django.template import Context
+from django.shortcuts import render_to_response
+from aquestion.models import Cho,Blank,Short,User,UnPaper,Paper,Wrongs
+
+def home(request):
+	username=request.session.get('username')
+	auth=request.session.get('auth')
+	b=Context({"auth":auth})
+	c=Context({"username":username})
+	return render_to_response("index.html",b,c)
+    
+def itemmanage(request):
+    if request.session.get('auth')=="teacher":
+        if request.GET:
+            subj=request.GET["subj"]
+            request.session["subj"]=subj
+        else:
+            if request.session.get("subj"):
+                subj=request.session.get("subj")
+            else:
+                return HttpResponse("无效访问")
+        cho_l = Cho.objects.filter(subj=subj)
+        blank_l = Blank.objects.filter(subj=subj)
+        short_l = Short.objects.filter(subj=subj)
+        dif_dic = {1:"简单",2:"容易",3:"较难",4:"难"}
+        p_l = [cho_l,blank_l,short_l,dif_dic,subj]
+        c = Context({"p_l":p_l})
+        username=request.session.get('username')
+        auth=request.session.get('auth')
+        user_l=[username,auth]
+        b=Context({"user_l":user_l})
+        return render_to_response("itemmanage.html",b,c)
+    else:
+        return HttpResponse("无效访问")
+    
+def modcho(request):
+    if request.session.get('auth')=="teacher":
+        if request.GET:
+            c_id = request.GET["choid"]
+            cho_p = Cho.objects.get(id = c_id)
+            c = Context({"cho":cho_p})
+            return render_to_response("modcho.html",c)
+    else:
+        return HttpResponse("无效访问")
+
+def modblank(request):
+    if request.session.get('auth')=="teacher":
+        if request.GET:
+            b_id = request.GET["blankid"]
+            blank_p = Blank.objects.get(id = b_id)
+            c = Context({"blank":blank_p})
+            return render_to_response("modblank.html",c)
+    else:
+        return HttpResponse("无效访问")
+        
+def modshort(request):
+    if request.session.get('auth')=="teacher":
+        if request.GET:
+            s_id = request.GET["shortid"]
+            short_p = Short.objects.get(id = s_id)
+            c = Context({"short":short_p})
+            return render_to_response("modshort.html",c)
+    else:
+        return HttpResponse("无效访问")
+        
+def delcho(request):
+    if request.session.get('auth')=="teacher":
+        if request.GET:
+            c_id = request.GET["choid"]
+            cho_p = Cho.objects.get(id = c_id)
+            cho_p.delete()
+            return HttpResponseRedirect('/myque/')
+    else:
+        return HttpResponse("无效访问")
+            
+def delblank(request):
+    if request.session.get('auth')=="teacher":
+        if request.GET:
+            b_id = request.GET["blankid"]
+            blank_p = Blank.objects.get(id = b_id)
+            blank_p.delete()
+            return HttpResponseRedirect('/myque/')
+    else:
+        return HttpResponse("无效访问")
+
+def delshort(request):
+    if request.session.get('auth')=="teacher":
+        if request.GET:
+            s_id = request.GET["shortid"]
+            short_p = Short.objects.get(id = s_id)
+            short_p.delete()
+            return HttpResponseRedirect('/myque/')
+    else:
+        return HttpResponse("无效访问")
+        
+def search(request):
+    if request.session.get('auth')=="teacher":
+        sub = request.session.get('subj')
+        if request.GET:
+            st = request.GET["select"]
+            ss = request.GET["searchstr"]
+            cho_p = []
+            blank_p = []
+            short_p = []
+            if st == "cho":
+                cho_p = Cho.objects.filter(title__contains = ss,subj = sub)
+            elif st == "blank":
+                blank_p = Blank.objects.filter(title__contains = ss,subj = sub)
+            elif st == "short":
+                short_p = Short.objects.filter(title__contains = ss,subj = sub)
+            p_l = [cho_p,blank_p,short_p]
+            c = Context({"p_l":p_l})
+            return render_to_response("itemmanage.html",c)
+    else:
+        return HttpResponse("无效访问")
+
+
+
+def updcho(request):
+    if request.session.get('auth')=="teacher":
+        if request.POST:
+            post = request.POST
+            p_id = post["ID"]
+            cho_p = Cho.objects.get(id = p_id)
+            cho_p.title = post["title"]
+            cho_p.difc = post["difc"]
+            cho_p.A = post["A"]
+            cho_p.B = post["B"]
+            cho_p.C = post["C"]
+            cho_p.D = post["D"]
+            cho_p.answer = post["answer"]
+            cho_p.save()
+            return HttpResponseRedirect('/myque/')
+    else:
+        return HttpResponse("无效访问")
+        
+def updblank(request):
+    if request.session.get('auth')=="teacher":
+        if request.POST:
+            post  = request.POST
+            b_id = post["ID"]
+            b_p = Blank.objects.get(id = b_id)
+            b_p.title = post["title"]
+            b_p.difc = post["difc"]
+            b_p.answer = post["answer"]
+            b_p.save()
+            return HttpResponseRedirect('/myque/')
+    else:
+        return HttpResponse("无效访问")
+        
+def updshort(request):
+    if request.session.get('auth')=="teacher":
+        if request.POST:
+            post = request.POST
+            s_id = post["ID"]
+            s_p = Short.objects.get(id = s_id)
+            s_p.title = post["title"]
+            s_p.difc = post["difc"]
+            s_p.answer = post["answer"]
+            s_p.save()
+            return HttpResponseRedirect('/myque/')
+    else:
+        return HttpResponse("无效访问")
+        
+def addcho(request):
+    if request.session.get('auth')=="teacher":
+        if request.POST:
+            post = request.POST
+            c_p = Cho(title = post['title'],difc = post['difc'],A = post['A'],B = post['B'],C = post['C'],D = post['D'],answer = post['answer'],subj=request.session.get("subj"),a_name=request.session.get("username"))
+            c_p.save()
+            return HttpResponseRedirect('/myque/')  
+    else:
+        return HttpResponse("无效访问")
+        
+def addblank(request):
+    if request.session.get('auth')=="teacher":
+        if request.POST:
+            post = request.POST
+            b_p = Blank(title = post["title"],difc = post["difc"],answer = post["answer"],subj=request.session.get("subj"),a_name=request.session.get("username"))
+            b_p.save()
+            return HttpResponseRedirect('/myque/') 
+    else:
+        return HttpResponse("无效访问")
+        
+def addshort(request):
+    if request.session.get('auth')=="teacher":
+        if request.POST:
+            post = request.POST
+            s_p = Short(title = post["title"],difc = post["difc"],answer = post["answer"],subj=request.session.get("subj"),a_name=request.session.get("username"))
+            s_p.save()
+            return HttpResponseRedirect('/myque/')  
+    else:
+        return HttpResponse("无效访问")
+
+        
+def quegenerate(request):
+    if request.session.get('auth')=="student":
+        if request.GET:
+            dif = request.GET["difc"]
+            subj=request.GET['subj']
+            c_li = Cho.objects.filter(difc = dif,subj=subj)
+            b_li = Blank.objects.filter(difc = dif,subj=subj)
+            c_le = len(c_li)
+            b_le = len(b_li)
+            if (c_le>=10 and b_le>=5):
+                cho_l = []
+                blank_l = []
+                c_l = []
+                b_l = []
+                for i in range(0,c_le):
+                    c_l.append(i)
+                for i in range(0,b_le):
+                    b_l.append(i)
+                for i in range(0,10):
+                    j = random.randint(0,c_le-1-i)
+                    cho_l.append(c_li[c_l[j]])
+                    del c_l[j]
+                for i in range(0,5):
+                    j = random.randint(0,b_le-1-i)
+                    blank_l.append(b_li[b_l[j]])
+                    del b_l[j]
+                c = Context({"cho_l":cho_l})
+                b = Context({"blank_l":blank_l})
+                return render_to_response("quegenerate.html",b,c)
+            else:
+                return HttpResponse("数据库题量不足");
+    else:
+        return HttpResponse("无效访问")
+
+def acho(request):
+    if request.session.get('auth')=="teacher":
+        return render_to_response("cho.html")
+    else:
+        return HttpResponse("无效访问")
+
+def ablank(request):
+    if request.session.get('auth')=="teacher":
+        return render_to_response("blank.html")
+    else:
+        return HttpResponse("无效访问")
+        
+def ashort(request):
+    if request.session.get('auth')=="teacher":
+        return render_to_response("short.html")  
+    else:
+        return HttpResponse("无效访问")
+    
+def submit(request):
+    if request.session.get('auth')=="student":
+        username=request.session.get("username")
+        if request.POST:
+            answer_c = []
+            answer_b = []
+            cho_l = []
+            blank_l = []
+            w = Wrongs.objects.get(stu = username)
+            cho_wls = w.cho_l
+            blank_wls = w.blk_l
+            cho_wals = w.cho_al
+            blank_wals = w.blk_al
+            cho_wl = cho_wls.split("|")
+            blank_wl = blank_wls.split("|")
+            cho_wal = cho_wals.split("|")
+            blank_wal = blank_wals.split("|")
+            post = request.POST
+            for i in ['1','2','3','4','5','6','7','8','9','10']:
+                cho_a = post['cho_'+i]
+                cho_id = post['cho_'+i+'_a']
+                ch = Cho.objects.get(id = cho_id)
+                cho_l.append(ch)
+                a = ch.answer
+                if cho_a == a:
+                    answer_c.append(1)
+                else:
+                    cho_wl.append(cho_id)
+                    cho_wal.append(cho_a)
+                    answer_c.append(0)
+            for i in ['1','2','3','4','5']:
+                blank_a = post['blank_'+i]
+                blank_id = post['blank_'+i+'_a']
+                b = Blank.objects.get(id = blank_id)
+                blank_l.append(b)
+                a = b.answer
+                if blank_a == a:
+                    answer_b.append(1)
+                else:
+                    blank_wl.append(blank_id)
+                    blank_wal.append(blank_a)
+                    answer_b.append(0)
+            l = [answer_c,answer_b,cho_l,blank_l]
+            cho_tl = "|".join(cho_wl)
+            cho_tal = "|".join(cho_wal)
+            blk_tl = "|".join(blank_wl)
+            blk_tal = "|".join(blank_wal)
+            w.cho_l = cho_tl
+            w.cho_al = cho_tal
+            w.blk_l = blk_tl
+            w.blk_al = blk_tal
+            w.save()
+            c = Context({"l":l})
+            return render_to_response("result.html",c)
+    else:
+        return HttpResponse("无效访问")
+        
+def lr(request):
+	users=User.objects.all()
+	c=Context({"users":users})
+	return render_to_response("lr.html",c)
+
+def register(request):
+	post=request.POST
+	if User.objects.filter(name=post["username"]):
+		return HttpResponseRedirect('/lr/')
+	else:
+		u=User(name=post["username"],pwd=post["pwd1"],auth=post["select"])
+		u.save()
+        if post["select"] == "student":
+            w = Wrongs(stu=post["username"],cho_l="",blk_l="",sho_l="",cho_al="",blk_al="",sho_al="")
+            w.save()
+        request.session["auth"]=post["select"]
+        request.session["username"]=post["username"]
+        return HttpResponseRedirect('/home/')
+	
+def login(request):
+	post=request.POST
+	username=post["username"]
+	pwd=post["pwd"]
+	user=User.objects.get(name=username)
+	if user.pwd==pwd:
+		request.session["username"]=user.name
+		request.session["auth"]=user.auth
+		return HttpResponseRedirect('/home/')
+	else:
+         users=User.objects.all()
+         c=Context({"users":users})
+         error="y"
+         b=Context({"error":error})
+         return render_to_response("lr.html",b,c)
+    
+def logout(request):
+	del request.session["username"]
+	del request.session["auth"]
+	return HttpResponseRedirect('/home/')
+    
+    
+def myque(request):
+    if request.session.get('auth')=="teacher":
+        a_name=request.session.get("username")
+        subj=request.session.get("subj")
+        cho_l = Cho.objects.filter(a_name=a_name,subj=subj)
+        blank_l = Blank.objects.filter(a_name=a_name,subj=subj)
+        short_l = Short.objects.filter(a_name=a_name,subj=subj)
+        if (len(cho_l) == 0):
+            c_p = Cho(title = '')
+            cho_l = []
+            cho_l.append(c_p)
+        if (len(blank_l) == 0):  
+            b_p = Blank(title = '')
+            blank_l = []
+            blank_l.append(b_p)
+        if (len(short_l) == 0):
+            s_p = Short(title = '')
+            short_l = []
+            short_l.append(s_p)
+        dif_dic = {1:"简单",2:"容易",3:"较难",4:"难"}
+        p_l = [cho_l,blank_l,short_l,dif_dic,subj]
+        c = Context({"p_l":p_l})
+        return render_to_response("myque.html",c)
+    else:
+        return HttpResponse("无效访问")
+    
+    
+def make_pap(request):
+    if request.session.get('auth')=="teacher":
+        if request.GET:
+            get = request.GET
+            tea=request.session.get("username")
+            pn=get['pn']
+            cho_l1 = []
+            blk_l1 = []
+            sho_l1 = []
+            for i in ['1','2','3','4','5','6','7','8','9','10']:
+                cho_p = get['cho_'+i]
+                cho_l1.append(cho_p)
+            for i in ['1','2','3','4','5']:
+                blk_p = get['blank_'+i]
+                blk_l1.append(blk_p)
+            sho_p = get['short_1']
+            sho_l1 = sho_p
+            sp = '|'
+            cho_l2 = sp.join(cho_l1)
+            blk_l2 = sp.join(blk_l1)
+            subj1 = Short.objects.get(id=string.atoi(get['short_1'])).subj
+            unpap = UnPaper(pn=pn,cho_l=cho_l2,blk_l=blk_l2,sho_l=sho_l1,subj=subj1,tea=tea)
+            unpap.save()
+            return HttpResponseRedirect('/home/')
+    else:
+        return HttpResponse("无效访问")
+
+def papselect(request):
+    if request.session.get('auth')=="student":
+        if request.GET:
+            get = request.GET
+            t_l = []
+            pap_d = []
+            sub = get['subj']
+            pap_l = UnPaper.objects.filter(subj = sub)
+            for i in pap_l:
+                t_l.append(i.tea)
+            tea_l = list(set(t_l))
+            for t in tea_l:
+                pap_l = UnPaper.objects.filter(subj = sub,tea = t)
+                pap_d.append(pap_l)
+            if tea_l:
+                t = Context({"tea_l":tea_l})
+                p = Context({"pap_d":pap_d})
+                return render_to_response("papselect.html",t,p)
+            else:
+                return HttpResponse("无试卷")
+    else:
+        return HttpResponse("无效访问")
+        
+def dopaper(request):
+    if request.GET:
+        username=request.session.get("username")
+        p_id = request.GET["id"]
+        pap_l = UnPaper.objects.filter(id = p_id)
+        pap = pap_l[0]
+        cho_l = pap.cho_l
+        blk_l = pap.blk_l
+        sho_l = pap.sho_l
+        cho_l1 = cho_l.split("|")
+        blk_l1 = blk_l.split("|")
+        sho_l1 = sho_l.split("|")
+        cho_l2 = []
+        blk_l2 = []
+        sho_l2 = []
+        stu_s = pap.stu
+        stu_l = stu_s.split("|")
+        if username in stu_l:
+            return HttpResponse("you have finished this paper once,sorry than you can't have a second chance")
+        else:
+            for i in range(0,len(cho_l1)):
+                cho_l1[i] = string.atoi(cho_l1[i])
+            for i in range(0,len(blk_l1)):
+                blk_l1[i] = string.atoi(blk_l1[i])
+            for i in range(0,len(sho_l1)):
+                sho_l1[i] = string.atoi(sho_l1[i])
+            for i in cho_l1:
+                cho_p = Cho.objects.get(id = i)
+                cho_l2.append(cho_p)
+            for i in blk_l1:
+                blk_p = Blank.objects.get(id = i)
+                blk_l2.append(blk_p)
+            for i in sho_l1:
+                sho_p = Short.objects.get(id = i)
+                sho_l2.append(sho_p)
+            l = [cho_l2,blk_l2,sho_l2,p_id]
+            stu_l.append(username)
+            stu_l1 = "|".join(stu_l)
+            pap.stu = stu_l1
+            pap.save()
+            c = Context({"l":l})
+            return render_to_response("dopaper.html",c)
+            
+def submit_1(request):
+    if request.POST:
+        username=request.session.get('username')
+        answer_c = []
+        answer_b = []
+        cho_l = []
+        blank_l = []
+        post = request.POST
+        p_id=post['p_id']
+        pn=UnPaper.objects.get(id=p_id).pn
+        for i in ['1','2','3','4','5','6','7','8','9','10']:
+            cho_a = post['cho_'+i]
+            cho_id = post['cho_'+i+'_a']
+            cho_l.append(cho_id)
+            answer_c.append(cho_a)
+        for i in ['1','2','3','4','5']:
+            blank_a = post['blank_'+i]
+            blank_id = post['blank_'+i+'_a']
+            blank_l.append(blank_id)
+            answer_b.append(blank_a)
+        short_id = post['short_1_a']
+        sub = Short.objects.get(id = short_id).subj
+        answer_s = post['short_1']
+        cho_l1 = "|".join(cho_l)
+        blank_l1 = "|".join(blank_l)
+        answer_c1 = "|".join(answer_c)
+        answer_b1 = "|".join(answer_b)
+        pap = Paper(p_id=p_id,pn=pn,cho_l = cho_l1,blk_l = blank_l1,sho_l = short_id,cho_al = answer_c1,blk_al = answer_b1,sho_al = answer_s,stu = username,subj=sub,jud=0,sco = 0,sco_sum = 0)
+        pap.save()
+        return HttpResponseRedirect("/home/")
+
+def allpap(request):
+    if request.GET:
+        get = request.GET
+        subj = get["subj"]
+        pap = Paper.objects.filter(subj=subj)
+        c = Context({"pap_l":pap})
+        return render_to_response("allpap.html",c)
+
+
+def judge(request):
+    if request.GET:
+        get = request.GET
+        p_id = get["id"]
+        pap = Paper.objects.get(id = p_id)
+        w = Wrongs.objects.get(stu = pap.stu)
+        cho_wl = w.cho_l.split("|")
+        cho_wal = w.cho_al.split("|")
+        blk_wl = w.blk_l.split("|")
+        blk_wal = w.blk_al.split("|")
+        cho_l = pap.cho_l.split("|")
+        blk_l = pap.blk_l.split("|")
+        cho_al = pap.cho_al.split("|")
+        blk_al = pap.blk_al.split("|")
+        answer_c = []
+        answer_b = []
+        cho_t = []
+        blk_t = []
+        n = 0
+        sco_c = 0
+        sco_b = 0
+        sco = pap.sco
+        for i in range(0,len(cho_l)):
+            cho_t.append(Cho.objects.get(id = cho_l[i]))
+            a = Cho.objects.get(id = cho_l[i]).answer
+            answer_c.append(cho_al[i])
+            if a != cho_al[i]:
+                cho_wl.append(cho_l[i])
+                cho_wal.append(a)
+                n = n+1
+        sco_c = 50 - 5*n
+        n = 0
+        for i in range(0,len(blk_l)):
+            blk_t.append(Blank.objects.get(id = blk_l[i]))
+            a = Blank.objects.get(id = blk_l[i]).answer
+            answer_b.append(blk_al[i])
+            if a!= blk_al[i]:
+                blk_wl.append(blk_l[i])
+                blk_wal.append(a)
+                n = n+1
+        sco_b = 30 - 6*n
+        p_a = pap.sho_al
+        short_s = pap.sho_l
+        short_id = short_s.split("|")[0]
+        short_p = Short.objects.get(id = short_id).title
+        short_a = Short.objects.get(id = short_id).answer
+#        l = [short_p,short_a,p_id,p_a,cho_t,answer_c,blk_t,answer_b,sco_c,sco_b]
+        sho_com = pap.sho_cal
+        l = [answer_c,answer_b,cho_t,blk_t,sco_c,sco_b]
+        p_l = [short_p,short_a,p_id,p_a,sho_com,sco]
+        pap.sco_sum = sco_c+sco_b+sco
+        pap.jud = 1
+        pap.save()
+        cho_wls = "|".join(cho_wl)
+        cho_wals = "|".join(cho_wal)
+        blk_wls = "|".join(blk_wl)
+        blk_wals = "|".join(blk_wal)
+        w.cho_l = cho_wls
+        w.cho_al = cho_wals
+        w.blk_l = blk_wls
+        w.blk_al = blk_wals
+        w.save()
+        d = Context({"l":l})
+        c = Context({"p_l":p_l})
+        return render_to_response("judge.html",c,d)
+
+
+
+def submit2(request):
+    if request.POST:
+        post = request.POST
+        short_cal = post['sho_cal']
+        pap_id = post['pap_id']
+        sco = post['sco']
+        sco = string.atoi(sco)
+        pap = Paper.objects.get(id = pap_id)
+        pap.sho_cal = short_cal
+        pap.sco_sum = pap.sco_sum-pap.sco + sco
+        pap.sco = sco
+        pap.save()
+        short_s = pap.sho_l
+        short_id = short_s.split("|")[0]
+        short_a = pap.sho_al.split("|")[0]
+        if sco <= 10:
+            w = Wrongs.objects.get(stu = pap.stu)
+            sho_l = w.sho_l.split("|")
+            sho_al = w.sho_al.split("|")
+            sho_l.append(short_id)
+            sho_al.append(short_a)
+            sho_ls = "|".join(sho_l)
+            sho_als = "|".join(sho_al)
+            w.sho_l = sho_ls
+            w.sho_al = sho_als
+            w.save()
+        return HttpResponseRedirect('/home/')
+
+
+
+def rec(request):
+    username=request.session.get('username')
+    if request.GET:
+        get = request.GET
+        sub = get['subj']
+        pap = Paper.objects.filter(stu = username,subj = sub)
+        n = 0
+        pap = pap[::-1]
+        pap_l = []
+        for i in pap:
+            if i.jud == 1:
+                n = n+1
+            if n > 5 and i.jud == 1:
+                pap_l.append(i)
+        for i in pap_l:
+            i.delete()
+        pap = Paper.objects.filter(stu = username,subj = sub)
+        pap_l = []
+        pap_l1 = []
+        for i in pap:
+            if i.jud == 1:
+                pap_l.append(i)
+            else:
+                pap_l1.append(i)
+        cho_sum = len(pap_l)*10
+        bla_sum = len(pap_l)*5
+        cho_cs = 0
+        bla_cs = 0
+        for i in pap_l:
+            cho_l1 = i.cho_l.split("|")
+            bla_l1 = i.blk_l.split("|")
+            cho_al1 = i.cho_al.split("|")
+            bla_al1 = i.blk_al.split("|")
+            for j in range(0,len(cho_l1)):
+                cho_l1[j] = string.atoi(cho_l1[j])
+            for j in range(0,len(bla_l1)):
+                bla_l1[j] = string.atoi(bla_l1[j])
+            for j in range(0,len(cho_l1)):
+                ans = Cho.objects.get(id = cho_l1[j]).answer
+                if ans == cho_al1[j]:
+                    cho_cs = cho_cs+1
+            for j in range(0,len(bla_l1)):
+                ans = Blank.objects.get(id = bla_l1[j]).answer
+                if ans == bla_al1[j]:
+                    bla_cs = bla_cs+1
+        if len(pap_l) != 0:
+            c_cr = (float(cho_cs))/cho_sum
+            b_cr = (float(bla_cs))/bla_sum
+        else:
+            c_cr = 0
+            b_cr = 0
+        l = [pap_l,c_cr,b_cr, pap_l1]
+        c = Context({"l":l})
+        return render_to_response("rec.html",c)
+
+def showpap(request):
+    if request.GET:
+        get = request.GET
+        pap_id = get["p_id"]
+        pap = Paper.objects.get(id = pap_id)
+        cho_pl = []
+        blk_pl = []
+        sho_pl = []
+        ch_l = pap.cho_l
+        blk_l = pap.blk_l
+        sho_l = pap.sho_l
+        cho_l = ch_l.split("|")
+        blank_l = blk_l.split("|")
+        short_l = sho_l.split("|")
+        sco_sum = pap.sco_sum
+        sco = pap.sco
+        for i in cho_l:
+            cho_p = Cho.objects.get(id = i)
+            cho_pl.append(cho_p)
+        for i in blank_l:
+            blk_p = Blank.objects.get(id = i)
+            blk_pl.append(blk_p)
+        for i in short_l:
+            sho_p = Short.objects.get(id = i)
+            sho_pl.append(sho_p)
+        cho_al = pap.cho_al
+        blk_al = pap.blk_al
+        sho_al = pap.sho_al
+        answer_c = cho_al.split("|")
+        answer_b = blk_al.split("|")
+        answer_s = sho_al.split("|")
+        answer_cs = pap.sho_cal
+        l = [answer_c,answer_b,cho_pl,blk_pl,sho_pl,answer_s,answer_cs,sco,sco_sum]
+        c = Context({"l":l})
+        return render_to_response("showpap.html",c)
+
+def wrong(request):
+    username=request.session.get('username')
+    if request.GET:
+        get = request.GET
+        sub = get['subj']
+        w = Wrongs.objects.get(stu=username)
+        cho_l = w.cho_l.split("|")
+        blk_l = w.blk_l.split("|")
+        sho_l = w.sho_l.split("|")
+        cho_al = w.cho_al.split("|")
+        blk_al = w.blk_al.split("|")
+        sho_al = w.sho_al.split("|")
+        cho_sl = []
+        blk_sl = []
+        sho_sl = []
+        for i in range (0,len(cho_l)):
+            if cho_l[i] != '':
+                c = Cho.objects.get(id = cho_l[i])
+                if c.subj == sub:
+                    cho_sl.append([c,cho_al[i]])
+        print w.cho_l
+        print w.cho_al
+        print w.blk_l
+        print w.blk_al
+        for i in range (0,len(blk_l)):
+            if blk_l[i] != '':
+                b = Blank.objects.get(id = blk_l[i])
+                if b.subj == sub:
+                    blk_sl.append([b,blk_al[i]])
+        for i in range (0,len(sho_l)):
+            if sho_l[i] != '': 
+                s = Short.objects.get(id = sho_l[i])
+                if s.subj == sub:
+                    sho_sl.append([s,sho_al[i]])
+        l = [cho_sl,blk_sl,sho_sl]
+        a = Context({"l":l})
+        return render_to_response("wrong.html",a)
