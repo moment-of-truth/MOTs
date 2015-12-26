@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>修改填空题</title>
+<style type="text/css">
+h1 {
+	color: #3C6;
+}
+.b {
+	margin-left: 40px;
+}
+</style>
+</head>
+
+<body>
+<h1>修改填空题</h1>
+<div class="b">
+<form action="/updblank/" method="post" enctype="multipart/form-data" name="form1" >
+  <p>题目： </p>
+  <p>
+    <textarea name="title"  cols="45" rows="5">{{blank.title}}</textarea>
+  </p>
+  <p>答案：
+    <input type="text" name="answer" value="{{blank.answer}}"/>
+  </p>
+  <p>难度：
+    <select name="difc">
+      <option value="4">难</option>
+      <option value="3">较难</option>
+      <option value="2">容易</option>
+      <option value="1">简单</option>
+    </select>
+<input type="hidden" name="ID" value="{{blank.id}}" />
+  </p>
+  <p>
+     <input type="submit" name="button" id="button" value="提交" />
+  </p>
+</form>
+</div>
+</body>
+</html>
