@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+.cho {
+	width: auto;
+	padding-left: 10px;
+}
+.blank {
+	padding-left: 10px;
+	width: auto;
+}
+.title {
+	background-color: #CFF;
+	height: 60px;
+	border-bottom: thin solid #3C6;
+}
+h1 {
+	color: #3C6;
+}
+</style>
+</head>
+
+<body>
+<div class="title">
+<h1>在线练习</h1>
+</div>
+<p>一、选择题</p>
+<form action="/submit/" method="post">
+<div class="cho">
+<p>1.{{cho_l.0.title}}</p>
+  <p>
+    <input name="cho_1" type="radio" value="A" /> 
+  A.{{cho_l.0.A}}</p>
+  <p>
+  <input name="cho_1" type="radio" value="B" />
+    B.{{cho_l.0.B}}
+  </p>
+  <p>
+    <input name="cho_1" type="radio" value="C" />
+    C.{{cho_l.0.C}}
+  </p>
+  <p>
+    <input name="cho_1" type="radio" value="D" />
+    D.{{cho_l.0.D}}
+    <input type="hidden" name="cho_1_a" value="{{cho_l.0.id}}" />
+  </p>
+</div>
+<div class="cho">
+<p>2.{{cho_l.1.title}}</p>
+  <p>
+    <input name="cho_2" type="radio" value="A" /> 
+  A.{{cho_l.1.A}}</p>
+  <p>
+  <input name="cho_2" type="radio" value="B" />
+    B.{{cho_l.1.B}}
+  </p>
+  <p>
+    <input name="cho_2" type="radio" value="C" />
+    C.{{cho_l.1.C}}
+  </p>
+  <p>
+    <input name="cho_2" type="radio" value="D" />
+    D.{{cho_l.1.D}}
+    <input type="hidden" name="cho_2_a" value="{{cho_l.1.id}}" />
+  </p>
+</div>
+<div class="cho">
+<p>3.{{cho_l.2.title}}</p>
+  <p>
+    <input name="cho_3" type="radio" value="A" /> 
+  A.{{cho_l.2.A}}</p>
+  <p>
+  <input name="cho_3" type="radio" value="B" />
+    B.{{cho_l.2.B}}
+  </p>
+  <p>
+    <input name="cho_3" type="radio" value="C" />
+    C.{{cho_l.2.C}}
+  </p>
+  <p>
+    <input name="cho_3" type="radio" value="D" />
+    D.{{cho_l.2.D}}
+    <input type="hidden" name="cho_3_a" value="{{cho_l.2.id}}" />
+  </p>
+</div>
+<div class="cho">
+<p>4.{{cho_l.3.title}}</p>
+  <p>
+    <input name="cho_4" type="radio" value="A" /> 
+  A.{{cho_l.3.A}}</p>
+  <p>
+  <input name="cho_4" type="radio" value="B" />
+    B.{{cho_l.3.B}}
+  </p>
+  <p>
+    <input name="cho_4" type="radio" value="C" />
+    C.{{cho_l.3.C}}
+  </p>
+  <p>
+    <input name="cho_4" type="radio" value="D" />
+    D.{{cho_l.3.D}}
+    <input type="hidden" name="cho_4_a" value="{{cho_l.3.id}}" />
+  </p>
+</div>
+<div class="cho">
+<p>5.{{cho_l.4.title}}</p>
+  <p>
+    <input name="cho_5" type="radio" value="A" /> 
+  A.{{cho_l.4.A}}</p>
+  <p>
+  <input name="cho_5" type="radio" value="B" />
+    B.{{cho_l.4.B}}
+  </p>
+  <p>
+    <input name="cho_5" type="radio" value="C" />
+    C.{{cho_l.4.C}}
+  </p>
+  <p>
+    <input name="cho_5" type="radio" value="D" />
+    D.{{cho_l.4.D}}
+    <input type="hidden" name="cho_5_a" value="{{cho_l.4.id}}" />
+  </p>
+</div>
+<div class="cho">
+<p>6.{{cho_l.5.title}}</p>
+  <p>
+    <input name="cho_6" type="radio" value="A" /> 
+  A.{{cho_l.5.A}}</p>
+  <p>
+  <input name="cho_6" type="radio" value="B" />
+    B.{{cho_l.5.B}}
+  </p>
+  <p>
+    <input name="cho_6" type="radio" value="C" />
+    C.{{cho_l.5.C}}
+  </p>
+  <p>
+    <input name="cho_6" type="radio" value="D" />
+    D.{{cho_l.5.D}}
+    <input type="hidden" name="cho_6_a" value="{{cho_l.5.id}}" />
+  </p>
+</div>
+<div class="cho">
+<p>7.{{cho_l.6.title}}</p>
+  <p>
+    <input name="cho_7" type="radio" value="A" /> 
+    A.{{cho_l.6.A}}</p>
+  <p>
+  <input name="cho_7" type="radio" value="B" />
+    B.{{cho_l.6.B}}
+  </p>
+  <p>
+    <input name="cho_7" type="radio" value="C" />
+    C.{{cho_l.6.C}}
+  </p>
+  <p>
+    <input name="cho_7" type="radio" value="D" />
+    D.{{cho_l.6.D}}
+    <input type="hidden" name="cho_7_a" value="{{cho_l.6.id}}" />
+  </p>
+</div>
+<div class="cho">
+<p>8.{{cho_l.7.title}}</p>
+  <p>
+    <input name="cho_8" type="radio" value="A" /> 
+  A.{{cho_l.7.A}}</p>
+  <p>
+  <input name="cho_8" type="radio" value="B" />
+    B.{{cho_l.7.B}}
+  </p>
+  <p>
+    <input name="cho_8" type="radio" value="C" />
+    C.{{cho_l.7.C}}
+  </p>
+  <p>
+    <input name="cho_8" type="radio" value="D" />
+    D.{{cho_l.7.D}}
+    <input type="hidden" name="cho_8_a" value="{{cho_l.7.id}}" />
+  </p>
+</div>
+<div class="cho">
+<p>9.{{cho_l.8.title}}</p>
+  <p>
+    <input name="cho_9" type="radio" value="A" /> 
+  A.{{cho_l.8.A}}</p>
+  <p>
+  <input name="cho_9" type="radio" value="B" />
+    B.{{cho_l.8.B}}
+  </p>
+  <p>
+    <input name="cho_9" type="radio" value="C" />
+    C.{{cho_l.8.C}}
+  </p>
+  <p>
+    <input name="cho_9" type="radio" value="D" />
+    D.{{cho_l.8.D}}
+    <input type="hidden" name="cho_9_a" value="{{cho_l.8.id}}" />
+  </p>
+</div>
+<div class="cho">
+<p>10.{{cho_l.9.title}}</p>
+  <p>
+    <input name="cho_10" type="radio" value="A" /> 
+  A.{{cho_l.9.A}}</p>
+  <p>
+  <input name="cho_10" type="radio" value="B" />
+    B.{{cho_l.9.B}}
+  </p>
+  <p>
+    <input name="cho_10" type="radio" value="C" />
+    C.{{cho_l.9.C}}
+  </p>
+  <p>
+    <input name="cho_10" type="radio" value="D" />
+    D.{{cho_l.9.D}}
+    <input type="hidden" name="cho_10_a" value="{{cho_l.9.id}}" />
+  </p>
+</div>
+二、填空题
+<div class="blank">
+<p>1.{{blank_l.0.title}}</p>
+<input type="text" name="blank_1" />
+<input type="hidden" name="blank_1_a" value="{{blank_l.0.id}}" />
+</div>
+<div class="blank">
+<p>2.{{blank_l.1.title}}</p>
+<input type="text" name="blank_2" />
+<input type="hidden" name="blank_2_a" value="{{blank_l.1.id}}" />
+</div>
+<div class="blank">
+<p>3.{{blank_l.2.title}}</p>
+<input type="text" name="blank_3" />
+<input type="hidden" name="blank_3_a" value="{{blank_l.2.id}}" />
+</div>
+<div class="blank">
+<p>4.{{blank_l.3.title}}</p>
+<input type="text" name="blank_4" />
+<input type="hidden" name="blank_4_a" value="{{blank_l.3.id}}" />
+</div>
+<div class="blank">
+<p>5.{{blank_l.4.title}}</p>
+<input type="text" name="blank_5" />
+<input type="hidden" name="blank_5_a" value="{{blank_l.4.id}}" />
+</div>
+<p align="right">
+  <input type="submit" name="button" id="button" value="提交" />
+</p>
+</form>
+</body>
+</html>
