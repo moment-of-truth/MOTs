@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{%load staticfiles %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>登陆/注册</title>
+<style type="text/css">
+.b {
+	margin-top:5%;
+	height:400px;
+	width:auto;
+	background-repeat:no-repeat;
+	background-image:url( {% static "c4b24c604369bc96ce375e11b8497249.jpg" %});
+}
+.lr {
+	width: 350px;
+	height: 400px;
+	border:thin solid #CCC;
+	float:right;
+	margin-right:10%;
+}
+.login {
+	width: 175px;
+	height: 30px;
+	border-top:thin solid;
+	border-left:thin solid;
+	border-right:thin solid;
+	border-bottom:thin solid;
+	position:absolute;
+	
+}
+.regi {
+	width: 175px;
+	float: right;
+	height: 30px;
+	border-top: thin solid;
+	border-left:thin solid;
+	border-right:thin solid;
+	border-bottom:thin solid;
+	position:absolute;
+	margin-left:175px;
+}
+.info {
+	background-color: #FFF;
+	border-left:thin solid #3C6;
+	border-right:thin solid #3C6;
+	border-bottom: thin solid #3C6;
+	margin-top:32px;
+	position:absolute;
+	height:368px;
+	width:290px;
+	padding-left:60px;
+}
+h1 {
+	color: #3C6;
+}
+h3{
+	color:#F00;
+}
+.text {
+	float: left;
+	width: 200px;
+	height: 60px;
+}
+.title {
+	background-color: #CFF;
+	height: 60px;
+	border-bottom: thin solid #3C6;
+}
+</style>
+<script>
+window.onload=function()
+{
+	var login=document.getElementById("login")
+	var regi=document.getElementById("regi")
+	var login_info=document.getElementById("login_info")
+	var regi_info=document.getElementById("regi_info")
+	login_info.style.display="block";
+	login.style.borderLeftColor="#3C6";
+	login.style.borderRightColor="#3C6";
+	login.style.borderTopColor="#3C6";
+	login.style.borderBottomColor="#FFF";
+	
+	regi_info.style.display="none";
+	regi.style.borderLeftColor="#3C6";
+	regi.style.borderRightColor="#CCC";
+	regi.style.borderTopColor="#CCC";
+	regi.style.borderBottomColor="#3C6";
+	
+	login.onclick=function(){
+		login_info.style.display="block";
+		login.style.borderLeftColor="#3C6";
+		login.style.borderRightColor="#3C6";
+		login.style.borderTopColor="#3C6";
+		login.style.borderBottomColor="#FFF";
+		
+		regi_info.style.display="none";
+		regi.style.borderLeftColor="#3C6";
+		regi.style.borderRightColor="#CCC";
+		regi.style.borderTopColor="#CCC";
+		regi.style.borderBottomColor="#3C6";
+	}
+	regi.onclick=function(){
+		regi_info.style.display="block";
+		regi.style.borderLeftColor="#3C6";
+		regi.style.borderRightColor="#3C6";
+		regi.style.borderTopColor="#3C6";
+		regi.style.borderBottomColor="#FFF";
+		
+		login_info.style.display="none";
+		login.style.borderLeftColor="#CCC";
+		login.style.borderRightColor="#3C6";
+		login.style.borderTopColor="#CCC";
+		login.style.borderBottomColor="#3C6"
+	}
+}
+function check0()
+{
+	var pwd=document.form1.pwd.value;
+	var username=document.form1.username.value;
+	var f=0;
+	{%for user in users%}
+	if (username=="{{user.name}}"){f=f+1;}
+	{%endfor%}
+	if (username==""){
+		document.form1.explain.value="用户名不能为空!";
+		return;
+	}
+	else if(f==0){
+		document.form1.explain.value="用户名不存在!";
+		return;		
+	}
+	else if (pwd==""){
+		document.form1.explain.value="密码空，请输入!";
+		return;
+		}
+	else{
+		document.form1.explain.value="";
+	}
+}
+function subm0()
+{
+	var pwd=document.form1.pwd.value;
+	var username=document.form1.username.value;
+	var f=0;
+	{%for user in users%}
+	if (username=="{{user.name}}"){f=f+1;}
+	{%endfor%}
+	if (username!="" && f!=0 && pwd!=""){
+		document.form1.submit();
+	}
+}
+function check()
+{
+
+	var pwd1=document.form2.pwd1.value;
+	var pwd2=document.form2.pwd2.value;
+	var username=document.form2.username.value;
+	var f=0;
+	{%for user in users%}
+	if (username=="{{user.name}}"){f=f+1;}
+	{%endfor%}
+	if (username==""){
+		document.form2.explain.value="用户名不能为空!";
+		return;
+	}
+	else if(f!=0){
+		document.form2.explain.value="用户名存在!";
+		return;		
+	}
+	else if (pwd1==""){
+		document.form2.explain.value="密码空，请输入!";
+		return;
+		}
+	else if (pwd2!=pwd1){
+		document.form2.explain.value="两次输入密码不同!";
+		}
+	else {
+		document.form2.explain.value="";
+	}
+}
+function subm()
+{
+
+	var pwd1=document.form2.pwd1.value;
+	var pwd2=document.form2.pwd2.value;
+	var username=document.form2.username.value;
+	var f=0;
+	{%for user in users%}
+	if (username=="{{user.name}}"){f=f+1;}
+	{%endfor%}
+	if (username!="" && f==0 && pwd1!="" && pwd2==pwd1)
+	{
+		document.form2.submit();
+	}
+}
+</script>
+</head>
+
+<body>
+<div class="title">
+  <div class="text">
+    <h1>在线考试系统</h1>
+  </div>
+</div>
+<div class="b">
+  <div class="lr">
+    <div align="center" class="login" id="login" name="login"> 登陆 </div>
+    <div align="center" class="regi" id="regi" name="regi"> 注册 </div>
+    <div id="login_info"  name="login_info" class="info" align="left">
+      <p>&nbsp; </p>
+      <form name="form1" action="/login/"  method="post">
+        <p>账号:
+          <input name="username" onblur="javascript:check0()" type="text" />
+        </p>
+        <p>密码:
+          <input name="pwd" onblur="javascript:check0()"  type="password" />
+        </p>
+        <p>
+          <input type="radio" name="radio" id="radio" value="yes" />
+          <label for="radio"></label>
+          记住密码 </p>
+        <p><a href="#">忘记密码?</a></p>
+        <input value="登陆" type="button" onclick="javascript:subm0()"name="submi"/>
+        <input  name="explain" style="border:none; background:#FFF;" readonly/>
+        {%ifequal error 'y'%}<h3>密码错误!</h3>{%endifequal%}
+      </form>
+    </div>
+    <div id="regi_info" name="regi_info" class="info" align="left">
+      <p>&nbsp; </p>
+      <form name="form2" action="/register/" method="post">
+        <p>账号:
+          <input name="username" type="text" onblur="javascript:check()" />
+        </p>
+        <p>密码:
+          <input name="pwd1" type="password" onblur="javascript:check()"/>
+        </p>
+        <p>确认密码:
+          <input name="pwd2"  onblur="javascript:check()" type="password" />
+        </p>
+        <p>角色:
+          <select name="select">
+            <option value="student">学生</option>
+            <option value="teacher">老师</option>
+          </select>
+        </p>
+        <input value="注册" type="button" onclick="javascript:subm()" name="submi" />
+        <input  name="explain" style="border:none; background:#FFF; " readonly/>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
