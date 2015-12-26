@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+h1 {
+	color: #3C6;
+}
+</style>
+<script>
+window.onload=function()
+{
+	var pap=document.getElementsByName("pap");
+	var tea=document.form1.tea.value;
+	var div_tea=document.getElementById(tea);
+	for(var i=0;i<pap.length;i++)
+	{
+		pap[i].style.display="none";
+	}
+	div_tea.style.display="block";
+}
+function alter()
+{
+	var pap=document.getElementsByName("pap");
+	var tea=document.form1.tea.value;
+	var div_tea=document.getElementById(tea);
+	for(var i=0;i<pap.length;i++)
+	{
+		pap[i].style.display="none";
+	}
+	div_tea.style.display="block";
+}
+</script>
+</head>
+
+<body>
+<h1 align="center">试卷选择</h1>
+<div align="center">
+<p>请选择试卷：</p>
+<form name="form1">
+  老师：
+    <select name="tea" onchange="javscript:alter()">
+{%for tea in tea_l%}
+<option value="{{tea}}">{{tea}}</option>
+{%endfor%}
+</select>
+</form>
+{%for pap_l in pap_d%}
+<div id="{{pap_l.0.tea}}" name="pap">
+	{%for pap in pap_l%}
+	<p>试卷名：{{pap.pn}}<a href="/dopaper/?id={{pap.id}}"><input value="选择" type="button" /></a></p>
+	{%endfor%}
+</div>
+{%endfor%}
+<p>&nbsp;</p>
+</div>
+</body>
+</html>
