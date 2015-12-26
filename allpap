@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+.title {background-color: #CFF;
+	height: 60px;
+	border-bottom: thin solid #3C6;
+}
+h1{
+	color: #3C6;
+}
+</style>
+</head>
+
+<body>
+<div class="title">
+  <h1>所有试卷</h1>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+<table width="701" border="1">
+  <tr>
+    <td width="250"><div align="center">试卷ID</div></td>
+    <td width="250"><div align="center">试卷名</div></td>
+    <td width="250"><div align="center">状态</div></td>
+    <td width="250"><div align="center">操作</div></td>
+  </tr>
+   {%for pap in pap_l%}
+  <tr>
+    <td><div align="center">{{pap.id}}</div></td>
+    <td><div align="center">{{pap.pn}}</div></td>
+    <td><div align="center">{%ifequal pap.jud 0%}未批改{%else%}已批改{%endifequal%}</div></td>
+    <td><div align="center">{%ifequal pap.jud 0%}<a href="/judge/?id={{pap.id}}">批改</a>{%else%}<a href="/judge/?id={{pap.id}}">查看</a>{%endifequal%}</div></td>
+  </tr>
+  {%endfor%}
+</table>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
