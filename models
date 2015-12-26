@@ -1,0 +1,68 @@
+from django.db import models
+
+# Create your models here.
+class Cho(models.Model):
+	title = models.TextField()
+	difc = models.IntegerField()
+	A = models.CharField(max_length = 25)
+	B = models.CharField(max_length = 25)
+	C = models.CharField(max_length = 25)
+	D = models.CharField(max_length = 25)
+	subj=models.CharField(max_length = 25)
+	answer = models.CharField(max_length = 2)
+	a_name=models.CharField(max_length = 25)
+    
+class Blank(models.Model):
+	title = models.TextField()
+	difc = models.IntegerField()
+	answer = models.TextField()
+	subj=models.CharField(max_length = 25)
+	a_name=models.CharField(max_length = 25)
+	
+    
+class Short(models.Model):
+    title = models.TextField()
+    difc = models.IntegerField()
+    answer = models.TextField()
+#    score = models.FloatField()
+    subj=models.CharField(max_length = 25)
+    a_name=models.CharField(max_length = 25)
+    
+class User(models.Model):
+    name=models.CharField(max_length=25)
+    pwd=models.CharField(max_length=25)
+    auth=models.CharField(max_length=25)
+
+class UnPaper(models.Model):
+    pn = models.CharField(max_length=40)
+    cho_l = models.CharField(max_length=40)
+    blk_l = models.CharField(max_length=20)
+    sho_l = models.CharField(max_length=10)
+    stu = models.CharField(max_length=50)
+    subj = models.CharField(max_length=25)
+    tea =models.CharField(max_length=25)
+    
+class Paper(models.Model):
+    p_id = models.CharField(max_length=40)
+    pn = models.CharField(max_length=40)
+    cho_l = models.CharField(max_length=40)
+    blk_l = models.CharField(max_length=20)
+    sho_l = models.CharField(max_length=10)
+    cho_al = models.CharField(max_length=20)
+    blk_al = models.TextField()
+    sho_al = models.TextField()
+    sho_cal = models.TextField()
+    stu = models.CharField(max_length=25)
+    subj = models.CharField(max_length = 25)
+    sco_sum = models.IntegerField()
+    sco = models.IntegerField()
+    jud = models.IntegerField()
+
+class Wrongs(models.Model):
+    cho_l = models.TextField()
+    blk_l = models.TextField()
+    sho_l = models.TextField()
+    cho_al = models.TextField()
+    blk_al = models.TextField()
+    sho_al = models.TextField()
+    stu = models.CharField(max_length=50)
