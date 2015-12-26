@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>首页</title>
+<style type="text/css">
+.left {
+	height: 210px;
+	width: 200px;
+	top: 183px;
+	position:absolute;
+	left: 13%;
+	border: thin solid #3C6;
+}
+.right {
+	width: 200px;
+	height: 210px;
+	top: 183px;
+	position:absolute;
+	left: 73%;
+	border: thin solid #3C6;
+}
+.center {
+	width: 200px;
+	height: 210px;
+	top: 183px;
+	position:absolute;
+	left: 43%;
+	border: thin solid #3C6;
+}
+h1 {
+	color: #3C6;
+}
+h2 {
+	color: #3C6;
+}
+.lr {
+	width: 140px;
+	float: right;
+	height:60px;
+	margin-top:20px;
+}
+.text {
+	float: left;
+	width: 200px;
+	height: 60px;
+}
+.title {
+	background-color: #CFF;
+	height: 60px;
+	border-bottom: thin solid #3C6;
+}
+.ufunc {
+	width:140px;
+	height:120px;
+	background-color: #CFF;
+}
+</style>
+<script>
+function quegenerate()
+{
+	var student="student";
+	var teacher="teacher";
+	{%if auth%}
+	if (teacher=={{auth}})
+	{
+		alert("必须以学生身份登陆，才能在线考试！");
+	}
+		var teacher="teacher";
+	if(student=={{auth}})
+	{
+		document.form1.submit();
+	}
+	{%else%}
+	alert("必须以学生身份登陆，才能在线考试！");
+	{%endif%}
+	
+}
+function dopaper()
+{
+	var student="student";
+	var teacher="teacher";
+	{%if auth%}
+	if (teacher=={{auth}})
+	{
+		alert("必须以学生身份登陆，才能在线考试！");
+	}
+		var teacher="teacher";
+	if(student=={{auth}})
+	{
+		document.form3.submit();
+	}
+	{%else%}
+	alert("必须以学生身份登陆，才能在线考试！");
+	{%endif%}
+	
+}
+function itman()
+{
+	var student="student";
+	var teacher="teacher";
+	{%if auth%}
+	if (student=={{auth}})
+	{
+		alert("必须以教师身份登陆，才能进行题库管理");
+	}
+		var teacher="teacher";
+	if(teacher=={{auth}})
+	{
+	window.form2.submit();
+	}
+	{%else%}
+	alert("必须以教师身份登陆，才能进行题库管理");
+	{%endif%}
+}
+window.onload=function()
+{
+	var ufunc=document.getElementById("ufunc");
+	var ufunc1=document.getElementById("ufunc1");
+	var jp=document.getElementById("jp");
+	var jp_subj=document.getElementById("jp_subj");
+	ufunc1.style.display="none";
+	jp_subj.style.display="none";
+	
+	
+	ufunc.onmouseover=function(){
+		ufunc1.style.display="block";
+	}
+	ufunc.onmouseout=function()
+	{
+		ufunc1.style.display="none";
+	}
+	jp.onmouseover=function(){
+		jp_subj.style.display="block";
+	}
+	jp.onmouseout=function()
+	{
+		jp_subj.style.display="none";
+	}
+	{%ifequal auth "student"%}
+	var jp1=document.getElementById("jp1");
+	var jp1_subj=document.getElementById("jp1_subj");
+	jp1_subj.style.display="none";
+	jp1.onmouseover=function(){
+		jp1_subj.style.display="block";
+	}
+	jp1.onmouseout=function()
+	{
+		jp1_subj.style.display="none";
+	}
+	{%endifequal%}
+}
+</script>
+</head>
+
+<body link="#3C6" alink="#3C6">
+<div class="title">
+  <div class="text">
+    <h1>在线考试系统</h1>
+  </div>
+  <div class="lr"> {%if username%}
+    <p>
+    <div id="ufunc" >
+      <p>{%ifequal auth "teacher"%}老师{%endifequal%}{%ifequal auth "student"%}学生{%endifequal%}({{username}})</p>
+      <div id="ufunc1" class="ufunc">
+      <p><a href="/logout/">注销</a></p>
+      {%ifequal auth "teacher"%}
+      <div id="jp">改卷<div class="subj" id="jp_subj"><p><a href="/allpap/?subj=math">数学</a> <a href="/allpap/?subj=chinese">语文</a> <a href="/allpap/?subj=english">英语</a></p></div></div>
+      {%endifequal%}
+      {%ifequal auth "student"%}
+      <div id="jp">考试记录<div class="subj" id="jp_subj"><p><a href="/rec/?subj=math">数学</a> <a href="/rec/?subj=chinese">语文</a> <a href="/rec/?subj=english">英语</a></p></div></div>
+      <div id="jp1">错题集<div class="subj" id="jp1_subj"><p><a href="/wrong/?subj=math">数学</a> <a href="/wrong/?subj=chinese">语文</a> <a href="/wrong/?subj=english">英语</a></p></div></div>
+      {%endifequal%}
+      </div>
+    </div>
+    {%else%}
+    <p><a href="/lr/">登陆/注册</a></p>
+    {%endif%} </div>
+</div>
+<div align="center" class="left">
+  <p>&nbsp;</p>
+  <form id="form1" name="form1" method="get" action="/quegenerate/">
+    <p>选择难度:
+      <select name="difc" id="difc">
+        <option value="4">难</option>
+        <option value="3">较难</option>
+        <option value="2">容易</option>
+        <option value="1">简单</option>
+      </select>
+    </p>
+    <p>选择科目:
+      <select name="subj" id="subj">
+        <option value="math">数学</option>
+        <option value="chinese">语文</option>
+        <option value="english">英语</option>
+      </select>
+    </p>
+  </form>
+  <a href="javascript:quegenerate()">
+  <h2>在线练习</h2>
+  </a> </div>
+<div class="center" align="center" >
+<p>&nbsp;</p>
+<form action="/papselect/" method="get" name="form3">
+	
+	<p>选择科目:
+      <select name="subj" id="subj">
+        <option value="math">数学</option>
+        <option value="chinese">语文</option>
+        <option value="english">英语</option>
+      </select>
+    </p>
+</form>
+<p>&nbsp;</p>
+<a href="javascript:dopaper()">
+<h2>在线考试</h2>
+</a>
+</div>
+<div align="center" class="right">
+  <p>&nbsp;</p>
+  <form id="form2" name="form2" method="get" action="/itemmanage/">
+    <p>选择科目:
+      <select name="subj" id="subj">
+        <option value="math">数学</option>
+        <option value="chinese">语文</option>
+        <option value="english">英语</option>
+      </select>
+    </p>
+  </form>
+  <p>&nbsp;</p>
+  <a href="javascript:itman()">
+  <h2>题库管理</h2>
+  </a></div>
+</body>
+</html>
