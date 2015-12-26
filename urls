@@ -1,0 +1,56 @@
+from django.conf.urls import patterns, include, url
+from aquestion.views import home,rec,showpap,wrong,submit_1,judge,submit2,allpap,itemmanage,dopaper,papselect,make_pap,modcho,myque,logout,login,modblank,register,modshort,search,updcho,updblank,updshort,lr,quegenerate,addcho,addblank,addshort,acho,ablank,ashort,submit,delcho,delblank,delshort
+from django.conf.urls.static import static  
+from django.conf import settings
+# Uncomment the next two lines to enable the admin:
+# from django.contrib import admin
+# admin.autodiscover()
+
+urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'mots.views.home', name='home'),
+    # url(r'^mots/', include('mots.foo.urls')),
+
+    # Uncomment the admin/doc line below to enable admin documentation:
+    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+    # Uncomment the next line to enable the admin:
+    # url(r'^admin/', include(admin.site.urls)),
+    (r'^home/$',home),
+    (r'^$',home),
+    (r'^itemmanage/$',itemmanage),
+    (r'^modcho/$',modcho),
+    (r'^modblank/$',modblank),
+    (r'^modshort/$',modshort),
+    (r'^search/$',search),
+    (r'^updcho/$',updcho),
+    (r'^updblank/$',updblank),
+    (r'^updshort/$',updshort),
+    (r'^quegenerate/$',quegenerate),
+    (r'^addcho/$',addcho),
+    (r'^addblank/$',addblank),
+    (r'^addshort/$',addshort),
+    (r'^cho/$',acho),
+    (r'^blank/$',ablank),
+    (r'^short/$',ashort),
+    (r'^submit/$',submit),
+    (r'^delcho/$',delcho),
+    (r'^delblank/$',delblank),
+    (r'^delshort/$',delshort),
+    (r'^lr/$',lr),
+    (r'^register/$',register),  
+    (r'^login/$',login), 
+    (r'^logout/$',logout), 
+    (r'^myque/$',myque), 
+    (r'^make_pap/$',make_pap),
+    (r'^papselect/$',papselect),
+    (r'^dopaper/$',dopaper),
+    (r'^submit_1/$',submit_1),
+    (r'^allpap/$',allpap),
+    (r'^judge/$',judge),
+    (r'^submit_2/$',submit2),
+    (r'^rec/$',rec),
+    (r'^showpap/$',showpap),
+     (r'^wrong/$',wrong),
+)
+urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
