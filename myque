@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{%load staticfiles %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>题库管理</title>
+<style type="text/css">
+.search {
+	width: 350px;
+	height: 60px;
+	float: right;
+}
+.text {
+	float: left;
+	width: 200px;
+	height: 60px;
+}
+.title {
+	background-color: #CFF;
+	height: 60px;
+	border-bottom: thin solid #3C6;
+}
+h1 {
+	color: #3C6;
+}
+</style>
+<script src="{% static "SpryTabbedPanels.js" %}" type="text/javascript"></script>
+<link href="{% static "SpryTabbedPanels.css" %}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="title">
+  <div class="text">
+    <h1>我出的题</h1>
+  </div>
+</div>
+<h2 align="center">所有题目</h2>
+<p align="center">{%ifequal p_l.4 "chinese"%}语文{%endifequal%}{%ifequal p_l.4 "math"%}数学{%endifequal%}{%ifequal p_l.4 "english"%}英语{%endifequal%}</p>
+<div id="TabbedPanels1" class="TabbedPanels">
+  <ul class="TabbedPanelsTabGroup">
+    {% if p_l.0 %}
+    <li class="TabbedPanelsTab" tabindex="0">选择题</li>
+    {%endif%}
+    {% if p_l.1 %}
+    <li class="TabbedPanelsTab" tabindex="0">填空题</li>
+    {%endif%}
+    {% if p_l.2 %}
+    <li class="TabbedPanelsTab" tabindex="0">简答题</li>
+    {%endif%}
+  </ul>
+  <div class="TabbedPanelsContentGroup"> {% if p_l.0 %}
+    <div class="TabbedPanelsContent" align="center">
+      <p><a href="/cho/">添加选择题</a></p>
+      {%if p_l.0.0.title%}
+      <table style="word-break:break-all; word-wrap:break-all;" border="1">
+        <tr>
+          <td width="120"><div align="center">题号</div></td>
+          <td width="120"><div align="center">题目</div></td>
+          <td width="120"><div align="center">A</div></td>
+          <td width="120"><div align="center">B</div></td>
+          <td width="120"><div align="center">C</div></td>
+          <td width="120"><div align="center">D</div></td>
+          <td width="120"><div align="center">难度</div></td>
+          <td width="120"><div align="center">答案</div></td>
+          <td width="120">&nbsp;</td>
+        </tr>
+        {%for cho in p_l.0%}
+        <tr>
+          <td><div align="center">{{cho.id}}</div></td>
+          <td><div align="center">{{cho.title}}</div></td>
+          <td><div align="center">{{cho.A}}</div></td>
+          <td><div align="center">{{cho.B}}</div></td>
+          <td><div align="center">{{cho.C}}</div></td>
+          <td><div align="center">{{cho.D}}</div></td>
+          <td><div align="center">{%ifequal cho.difc 1%}简单{%endifequal%}{%ifequal cho.difc 2%}容易{%endifequal%}{%ifequal cho.difc 3%}较难 		           {%endifequal%}{%ifequal cho.difc 4%}难{%endifequal%}</div></td>
+          <td><div align="center">{{cho.answer}}</div></td>
+          <td><div align="center"><a href="/delcho/?choid={{cho.id}}">删除</a>&nbsp;<a href="/modcho/?choid={{cho.id}}">修改</a></div></td>
+        </tr>
+        {%endfor%}
+      </table>
+      {%endif%} </div>
+    {%endif%}
+    {% if p_l.1 %}
+    <div class="TabbedPanelsContent" align="center">
+      <p><a href="/blank/">添加填空题</a></p>
+      {%if p_l.1.0.title%}
+      <table style="word-break:break-all; word-wrap:break-all;" border="1">
+        <tr>
+          <td width="120"><div align="center">题号</div></td>
+          <td width="120"><div align="center">题目</div></td>
+          <td width="120"><div align="center">难度</div></td>
+          <td width="120"><div align="center">答案</div></td>
+          <td width="120">&nbsp;</td>
+        </tr>
+        {%for blank in p_l.1%}
+        <tr>
+          <td><div align="center">{{blank.id}}</div></td>
+          <td><div align="center">{{blank.title}}</div></td>
+          <td><div align="center">{%ifequal blank.difc 1%}简单{%endifequal%}{%ifequal blank.difc 2%}容易{%endifequal%}{%ifequal blank.difc 3%}较难 		           {%endifequal%}{%ifequal blank.difc 4%}难{%endifequal%}</div></td>
+          <td><div align="center">{{blank.answer}}</div></td>
+          <td><div align="center"><a href="/delblank/?blankid={{blank.id}}">删除</a>&nbsp;<a href="/modblank/?blankid={{blank.id}}">修改</a></div></td>
+        </tr>
+        {%endfor%}
+      </table>
+      {%endif%} </div>
+    {%endif%}
+    {% if p_l.2 %}
+    <div class="TabbedPanelsContent">
+      <p align="center"><a href="/short/">添加简答题</a></p>
+      <div align="center"> {%if p_l.2.0.title%}
+        <table style="word-break:break-all; word-wrap:break-all;" border="1">
+          <tr>
+            <td width="120"><div align="center">题号</div></td>
+            <td width="120"><div align="center">题目</div></td>
+            <td width="120"><div align="center">难度</div></td>
+            <td width="120"><div align="center">答案</div></td>
+            <td width="120">&nbsp;</td>
+          </tr>
+          {%for short in p_l.2%}
+          <tr>
+            <td><div align="center">{{short.id}}</div></td>
+            <td><div align="center">{{short.title}}</div></td>
+            <td><div align="center">{%ifequal short.difc 1%}简单{%endifequal%}{%ifequal short.difc 2%}容易{%endifequal%}{%ifequal short.difc 3%}较难 		           {%endifequal%}{%ifequal short.difc 4%}难{%endifequal%}</div></td>
+            <td><div align="center">{{short.answer}}</div></td>
+            <td><div align="center"><a href="/delshort/?shortid={{short.id}}">删除</a>&nbsp;<a href="/modshort/?shortid={{short.id}}">修改</a></div></td>
+          </tr>
+          {%endfor%}
+        </table>
+        {%endif%} </div>
+      {%endif%} </div>
+  </div>
+</div>
+<script type="text/javascript">
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
+</script>
+</body>
+</html>
